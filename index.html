@@ -26,51 +26,6 @@
         margin: 0;
         padding: 0;
       }
-      
-#sspBtn {
-  position: relative; 
-}
-
-/* Tooltip text */
-#sspBtn::after {
-  content: "Social Service Platform"; 
-  position: absolute;
-  bottom: 120%;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: black;
-  color: #fff;
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-size: 12px;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s;
-  z-index: 1000;
-}
-
-
-#sspBtn::before {
-  content: "";
-  position: absolute;
-  bottom: 110%; 
-  left: 50%;
-  transform: translateX(-50%);
-  border-width: 5px;
-  border-style: solid;
-  border-color: black transparent transparent transparent;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s;
-}
-
-
-#sspBtn:hover::after,
-#sspBtn:hover::before {
-  opacity: 1;
-}
-
       .center {
         width: 100%;
         height: 100%;
@@ -227,9 +182,9 @@
 }
 
 .profile-dropdown-list {
-  
+  /* Use fixed positioning so the dropdown isn't clipped by header ancestors */
   position: fixed;
-  top: 72px; 
+  top: 72px; /* place below header (adjust if you change header height) */
   right: 20px;
   background: #fff;
   border-radius: 10px;
@@ -238,7 +193,7 @@
   max-height: 0;
   transition: max-height 0.4s ease;
   width: 220px;
-  z-index: 1300; 
+  z-index: 1300; /* above the nav-bar (1200) */
 }
 
 .profile-dropdown-list.active {
@@ -310,7 +265,7 @@
     <i class="material-icons-round toggle-icon">expand_more</i>
   </div>
 
-  
+  <!-- profile-dropdown-list moved outside header to avoid clipping (see below) -->
 </div>
         </div>
     </div>
@@ -319,7 +274,7 @@
 </div>
   </header>
 
-
+  <!-- Moved sidebar out of header to avoid clipping by header ancestor -->
   <div class="nav-bar">
     <div class="head">
       <div class="logo"><img src="hello.png" alt="" ></div>
@@ -453,6 +408,8 @@
       <a href="SPEAKER.HTML">Speakers</a>
       |
       <a href="contact.html">Contact us</a>
+      |
+      <a href="https://www.youtube.com/watch?v=PCbN9W3lkos&feature=youtu.be">Tutorial</a>
     </div>
     <p>© 2025 Janata | All Rights Reserved</p>
 
