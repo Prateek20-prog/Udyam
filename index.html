@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Janata Style</title>
+  <link rel="stylesheet" href="style.css">
+  <!--Google Fonts and Icons-->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round|Material+Icons+Sharp|Material+Icons+Two+Tone"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <style>
+     body {
+        width: 100%;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+      }
+      .center {
+        width: 100%;
+        height: 100%;
+        position: relative;
+      }
+      .open {
+        width: 40px;
+        height: 40px;
+        background: rgb(37, 38, 53);
+        outline: none;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .close span {
+        color: white;
+        font-size: 30px;
+      }
+      .nav-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 250px;
+        background: rgb(37, 38, 53);
+        font-family: poppins;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-direction: column;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        transform: translateX(-300px);
+        transition: 0.25s;
+      }
+      .nav-bar.open {
+        transform: translateX(0);
+      }
+      .head {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-sizing: border-box;
+        padding: 10px 20px;
+        border-bottom: 0.5mm solid rgb(87, 88, 109);
+      }
+      .logo {
+        font-size: 28px;
+      }
+      .list {
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+      }
+      .list-title {
+        width: 100%;
+        padding: 5px 20px;
+        padding-top: 20px;
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.8);
+      }
+      .items {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      .item {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        color: white;
+        font-size: 14px;
+        text-decoration: none;
+      }
+      .item:hover {
+        background: rgba(100, 100, 100, 0.5);
+      }
+      .item span {
+        font-size: 20px;
+        margin-right: 5px;
+      }
+      .list:last-child {
+        flex-grow: 1;
+        justify-content: flex-end;
+      }
+      .list:last-child .item {
+        color: rgb(255, 131, 131);
+        background: rgba(100, 100, 100, 0.3);
+      }
+      .mk{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+      }
+      #bn{
+        height: 100px;
+        width: 100px;
+      }
+      .mk{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+      }
+      .profile-dropdown {
+  position: relative;
+  width: fit-content;
+  font-family: 'Poppins', sans-serif;
+}
+
+.profile-dropdown-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 1rem;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 170px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.profile-dropdown-btn:hover {
+  background-color: #f7f7f7;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.profile-img {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: #007bff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.3rem;
+  margin-right: 0.6rem;
+}
+
+.toggle-icon {
+  font-size: 1.3rem;
+  color: #444;
+  margin-left: auto;
+}
+
+.profile-dropdown-list {
+  /* Use fixed positioning so the dropdown isn't clipped by header ancestors */
+  position: fixed;
+  top: 72px; /* place below header (adjust if you change header height) */
+  right: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.4s ease;
+  width: 220px;
+  z-index: 1300; /* above the nav-bar (1200) */
+}
+
+.profile-dropdown-list.active {
+  max-height: 500px;
+}
+
+.profile-dropdown-list-item {
+  padding: 0.7rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.profile-dropdown-list-item:hover {
+  background: #f2f8ff;
+  padding-left: 1.3rem;
+}
+
+.profile-dropdown-list-item a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.profile-dropdown-list-item a i {
+  font-size: 1.3rem;
+  margin-right: 0.8rem;
+  color: #007bff;
+}
+
+.profile-dropdown-list hr {
+  border: 0.5px solid #eee;
+  margin: 0.3rem 0;
+}
+
+#oo{
+  border-radius: 20px;
+  height: 400px;
+  width: 400px;
+}
+.bg{
+  height: 150px;
+}
+
+  </style>
+
+  <!-- Header -->
+   <div class="bg">
+        
+  <header style="position: relative;">
+    <div class="mk">
+    <div class="center">
+      <button type="button" class="btn open">
+        <span class="material-icons-round"> menu </span>
+      </button>
+
+      
+    </div>
+    <div class="op" style="position: absolute; left: 50%; top: 12px; transform: translateX(-50%); display:flex; justify-content:center; align-items:center; z-index: 50;">
+      <img src="hello.png" alt="Janata Logo" id="bn">
+    </div>
+<div class="profile-dropdown" id="profile-dropdown">
+  <div class="profile-dropdown-btn" id="profile-dropdown-btn">
+    <div class="profile-img">
+      <i class="material-icons-round">person</i>
+    </div>
+    <span>Guest User</span>
+    <i class="material-icons-round toggle-icon">expand_more</i>
+  </div>
+
+  <!-- profile-dropdown-list moved outside header to avoid clipping (see below) -->
+</div>
+        </div>
+    </div>
+
+
+</div>
+  </header>
+
+  <!-- Moved sidebar out of header to avoid clipping by header ancestor -->
+  <div class="nav-bar">
+    <div class="head">
+      <div class="logo"><img src="hello.png" alt="" ></div>
+      <button type="button" class="btn close">
+        <span class="material-icons-round"> close </span>
+      </button>
+    </div>
+
+    <div class="list">
+      <div class="list-title">NGO </div>
+      <div class="items">
+        <a href="causes.html" class="item">
+          <span class="material-icons-outlined"> token </span>
+          Causes
+        </a>
+
+        <a href="donation.html" class="item">
+          <span class="material-icons-round"> analytics </span>
+          Donations
+        </a>
+
+        <a href="schemes.html" class="item">
+          <span class="material-icons-round"> show_chart </span>
+          Schemes
+        </a>
+
+        <a href="Community.html" class="item">
+          <span class="material-icons-round"> bar_chart </span>
+          Community
+        </a>
+      </div>
+    </div>
+
+    <div class="list">
+      <div class="list-title">Extra</div>
+      <div class="items">
+        <a href="index.html" class="item">
+          <span class="material-icons-round"> home </span>
+          Home
+        </a>
+        <a href="profile.html" class="item">
+          <span class="material-icons-round"> insights </span>
+          Profile
+        </a>
+        <a href="contact.html" class="item">
+          <span class="material-icons-round"> description </span>
+          Contact us
+        </a>
+      </div>
+    </div>
+
+    <div class="list">
+      <a href="" class="item">
+        <span class="material-icons-round">logout</span>
+        Logout
+      </a>
+    </div>
+  </div>
+
+  <!-- Profile dropdown list moved out of header to prevent clipping -->
+  <ul class="profile-dropdown-list" id="profile-dropdown-list">
+    <li class="profile-dropdown-list-item">
+      <a href="profile.html"><i class="material-icons-round">account_circle</i> Profile</a>
+    </li>
+    <li class="profile-dropdown-list-item">
+      <a href="#"><i class="material-icons-round">edit</i> Edit Profile</a>
+    </li>
+    <li class="profile-dropdown-list-item">
+      <a href="#"><i class="material-icons-round">settings</i> Settings</a>
+    </li>
+    <hr>
+    <li class="profile-dropdown-list-item">
+      <a href="#"><i class="material-icons-round">logout</i> Log Out</a>
+    </li>
+  </ul>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <div>
+      <div>
+      <h1>Welcome to JANATA
+      </h1>
+  <p>Register as</p>
+
+      <!-- Dropdown SSPs Button -->
+      <div class="dropdown">
+        <a href="#" class="btn aa" id="sspBtn" role="button" aria-haspopup="true" aria-expanded="false" aria-controls="sspMenu">SSPs ▾</a>
+        <ul class="dropdown-menu" id="sspMenu" role="menu" aria-label="SSP options">
+          <li><a href="ssp1.html" role="menuitem">NGO's</a></li>
+          <li><a href="register.html" role="menuitem">Orphanage</a></li>
+          <li><a href="causes.html" role="menuitem">Causes</a></li>
+          <li><a href="hospitals.html" role="menuitem">Hospitals</a></li>
+          <li><a href="schools.html" role="menuitem">Schools</a></li>
+          <li class="has-submenu">
+            <a href="#" role="menuitem" aria-haspopup="true" aria-expanded="false">Other ▸</a>
+            <ul class="dropdown-submenu" role="menu" aria-label="Other services">
+              <li><a href="disaster-relief.html" role="menuitem">Disaster Relief Fund</a></li>
+              <li><a href="food-assistance.html" role="menuitem">Food Assistance</a></li>
+              <li><a href="community-healthcare.html" role="menuitem">Community Healthcare</a></li>
+              <li><a href="shelter-support.html" role="menuitem">Shelter &amp; Housing Support</a></li>
+              <li><a href="education-support.html" role="menuitem">Education Support</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      
+
+      <!-- Donor Button -->
+      <a href="donor.html" class="btn aa">Donor</a>
+    </div>
+  </section>
+</div>
+
+<!-- Our Vision Section -->
+<section class="vision">
+  <div class="vision-content">
+    <h2>Our Vision</h2>
+    <p>Our vision is to create a safe, inclusive, and resilient community by ensuring access to quality shelter, education, and disaster relief services for all in need.</p>
+  </div>
+</section>
+
+  
+  <!-- Footer -->
+  <footer>
+    <div class="ff d-flex flex-row">
+      <a href="About.html">About us</a>
+      |
+      <a href="policy.html">Privacy Policy</a>
+      |
+      <a href="SPEAKER.HTML">Speakers</a>
+      |
+      <a href="contact.html">Contact us</a>
+    </div>
+    <p>© 2025 Janata | All Rights Reserved</p>
+
+  </footer>
+
+  <script src="script.js"></script>
+</div>
+</body>
+</html>

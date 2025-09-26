@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hospital Registration | Janata</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Page-scoped form improvements (does not affect other pages) */
+    .form-card{max-width:980px;margin:18px auto;padding:20px 22px;background:#fff;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.06);}
+    form#hospitalForm{display:flex;flex-direction:column;gap:14px}
+    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top: 60px;}
+    fieldset{border:0;padding:0;margin:0}
+    legend{font-weight:700;margin-bottom:6px}
+    label{display:block;font-size:0.95rem;margin-bottom:6px;color:#222}
+    input[type="text"],input[type="email"],input[type="tel"],input[type="url"],input[type="number"],input[type="date"],select,textarea{width:100%;padding:10px;border:1px solid #ddd;border-radius:6px;font-size:0.95rem;box-sizing:border-box}
+    textarea{resize:vertical}
+    .helper{font-size:0.85rem;color:#666;margin-top:4px}
+    .file-preview{font-size:0.9rem;color:#333;margin-top:6px}
+    .actions{display:flex;gap:12px;align-items:center}
+    @media (max-width:520px){.form-card{padding:12px}}
+  </style>
+</head>
+<body>
+  <main class="container">
+    <div class="form-card">
+      <header style="margin-bottom:8px;">
+        <a href="index.html" class="btn aa">◀ Back to Home</a>
+        <h1 style="margin:8px 0 4px">Hospital Registration</h1>
+        <p style="margin:0;color:#444">Register your hospital so donors and partners can verify your legitimacy. Required fields help with verification.</p>
+      </header>
+
+      <form id="hospitalForm" enctype="multipart/form-data" novalidate>
+        <div class="form-grid">
+          <fieldset>
+            <legend>Organization details</legend>
+            <label for="orgName">Hospital / Organisation name *<span class="helper"> (public name)</span></label>
+            <input id="orgName" name="orgName" type="text" required />
+
+            <label for="regNumber">Government registration number *<span class="helper"> (e.g., CSR/Reg no.)</span></label>
+            <input id="regNumber" name="regNumber" type="text" required />
+
+            <label for="licenseNumber">Medical license number *</label>
+            <input id="licenseNumber" name="licenseNumber" type="text" required />
+
+            <label for="licenseAuthority">License issuing authority</label>
+            <input id="licenseAuthority" name="licenseAuthority" type="text" />
+
+            <label for="licenseExpiry">License expiry date</label>
+            <input id="licenseExpiry" name="licenseExpiry" type="date" />
+          </fieldset>
+
+          <fieldset>
+            <legend>Capacity & services</legend>
+            <label for="yearEstablished">Year established</label>
+            <input id="yearEstablished" name="yearEstablished" type="number" min="1800" max="2100" />
+
+            <label for="ownership">Ownership type</label>
+            <select id="ownership" name="ownership">
+              <option value="private">Private</option>
+              <option value="government">Government</option>
+              <option value="trust">Trust / NGO</option>
+              <option value="other">Other</option>
+            </select>
+
+            <label for="beds">Number of beds</label>
+            <input id="beds" name="beds" type="number" min="0" />
+
+            <label for="services">Key services offered</label>
+            <input id="services" name="services" type="text" placeholder="e.g., Emergency, Maternity, ICU" />
+          </fieldset>
+
+          <fieldset>
+            <legend>Contact & address</legend>
+            <label for="contactPerson">Contact person *</label>
+            <input id="contactPerson" name="contactPerson" type="text" required />
+
+            <label for="designation">Designation</label>
+            <input id="designation" name="designation" type="text" />
+
+            <label for="email">Official email *</label>
+            <input id="email" name="email" type="email" required />
+
+            <label for="phone">Phone number *</label>
+            <input id="phone" name="phone" type="tel" pattern="[0-9+\-() ]{7,}" required />
+          </fieldset>
+
+          <fieldset>
+            <legend>Address & website</legend>
+            <label for="address">Full postal address *</label>
+            <textarea id="address" name="address" rows="3" required></textarea>
+
+            <label for="website">Website (if any)</label>
+            <input id="website" name="website" type="url" placeholder="https://" />
+          </fieldset>
+
+          <fieldset>
+            <legend>Verification documents</legend>
+            <label for="acc">Accreditation / certificate</label>
+            <input id="acc" name="acc" type="text" placeholder="NABH, ISO, etc." />
+            <label for="accFile">Upload accreditation certificate</label>
+            <input id="accFile" name="accFile" type="file" accept="application/pdf,image/*" />
+            <div class="file-preview" id="accFilePreview"></div>
+
+            <label for="regDoc">Upload registration document *</label>
+            <input id="regDoc" name="regDoc" type="file" accept="application/pdf,image/*" required />
+            <div class="file-preview" id="regDocPreview"></div>
+
+            <label for="licenseDoc">Upload license document *</label>
+            <input id="licenseDoc" name="licenseDoc" type="file" accept="application/pdf,image/*" required />
+            <div class="file-preview" id="licenseDocPreview"></div>
+          </fieldset>
+        </div>
+
+        <label style="margin-top:6px">
+          <input type="checkbox" id="declaration" required /> I declare that the information provided is true and valid to the best of my knowledge.
+        </label>
+
+        <div class="actions">
+          <button type="submit" class="btn aa">Submit registration</button>
+          <div id="message" aria-live="polite" style="color:#2b7a0b"></div>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    // Basic client-side handling: validate, preview file names and save to localStorage
+    (function(){
+      const form = document.getElementById('hospitalForm');
+      const msg = document.getElementById('message');
+
+      function fileName(el){ return el && el.files && el.files[0] ? el.files[0].name : ''; }
+
+      // wire previews
+      [['accFile','accFilePreview'],['regDoc','regDocPreview'],['licenseDoc','licenseDocPreview']].forEach(([inputId,previewId])=>{
+        const inp = document.getElementById(inputId); const prev = document.getElementById(previewId);
+        if(inp && prev){ inp.addEventListener('change', ()=>{ prev.textContent = fileName(inp) || ''; }); }
+      });
+
+      form.addEventListener('submit', (ev) => {
+        ev.preventDefault();
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+
+        const fd = new FormData(form);
+        const record = {
+          type: 'hospital',
+          orgName: fd.get('orgName'),
+          regNumber: fd.get('regNumber'),
+          licenseNumber: fd.get('licenseNumber'),
+          licenseAuthority: fd.get('licenseAuthority'),
+          licenseExpiry: fd.get('licenseExpiry'),
+          yearEstablished: fd.get('yearEstablished'),
+          ownership: fd.get('ownership'),
+          beds: fd.get('beds'),
+          services: fd.get('services'),
+          contactPerson: fd.get('contactPerson'),
+          designation: fd.get('designation'),
+          email: fd.get('email'),
+          phone: fd.get('phone'),
+          address: fd.get('address'),
+          website: fd.get('website'),
+          accreditation: fd.get('acc'),
+          accFileName: fileName(document.getElementById('accFile')),
+          regDocName: fileName(document.getElementById('regDoc')),
+          licenseDocName: fileName(document.getElementById('licenseDoc')),
+          submittedAt: new Date().toISOString(),
+        };
+
+        const key = 'ssp_registrations_v1';
+        const existing = JSON.parse(localStorage.getItem(key) || '[]');
+        existing.push(record);
+        localStorage.setItem(key, JSON.stringify(existing));
+
+        msg.textContent = 'Registration saved locally. (Demo storage)';
+        form.reset();
+        // clear previews
+        ['accFilePreview','regDocPreview','licenseDocPreview'].forEach(id=>{ const el=document.getElementById(id); if(el) el.textContent=''; });
+      });
+    })();
+  </script>
+</body>
+</html>

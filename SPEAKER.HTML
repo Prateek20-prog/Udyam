@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Speakers | Janata</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Header */
+    .header {
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center; /* changed from space-between to center */
+      padding: 8px 20px; /* reduced to match global header */
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .header img {
+      height: 50px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .header img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Speakers Section */
+    .speakers-page {
+      max-width: 1200px;
+      margin: 60px auto 40px; /* space for header */
+      padding: 20px;
+      text-align: center;
+    }
+
+    .speakers-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      background: linear-gradient(90deg, #003399, #007bff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .speakers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+    }
+
+    .speaker-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .speaker-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.15);
+    }
+
+    .speaker-card img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 3px solid #007bff;
+    }
+
+    .speaker-name {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 10px 0 5px;
+      color: #007bff;
+    }
+
+    .speaker-title {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .speaker-bio {
+      font-size: 0.9rem;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Footer inside this page */
+    footer {
+      margin-top: 60px;
+      background: #111;
+      color: #ccc;
+      text-align: center;
+      padding: 2rem 1rem;
+      border-radius: 12px 12px 0 0;
+    }
+
+    footer a {
+      color: #007bff;
+      font-weight: 500;
+      margin: 0 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header with centered logo -->
+  <header class="header">
+    <a href="index.html">
+      <img src="hello.png" alt="Janata Logo">
+    </a>
+  </header>
+
+  <!-- Speakers Section -->
+  <section class="speakers-page">
+    <h1 class="speakers-title">Our Speakers</h1>
+    <div class="speakers-grid">
+
+      <!-- Speaker 1 -->
+      <div class="speaker-card">
+        <img src="https://via.placeholder.com/120" alt="Speaker 1">
+        <div class="speaker-name">Dr. Ananya Sharma</div>
+        <div class="speaker-title">Education Reformer</div>
+        <p class="speaker-bio">Dr. Ananya has dedicated her life to creating equitable education opportunities for underprivileged communities.</p>
+      </div>
+
+      <!-- Speaker 2 -->
+      <div class="speaker-card">
+        <img src="https://via.placeholder.com/120" alt="Speaker 2">
+        <div class="speaker-name">Rahul Verma</div>
+        <div class="speaker-title">Tech Innovator</div>
+        <p class="speaker-bio">Rahul works on leveraging AI and data-driven solutions to empower NGOs and maximize their impact.</p>
+      </div>
+
+      <!-- Speaker 3 -->
+      <div class="speaker-card">
+        <img src="https://via.placeholder.com/120" alt="Speaker 3">
+        <div class="speaker-name">Neha Gupta</div>
+        <div class="speaker-title">Social Entrepreneur</div>
+        <p class="speaker-bio">Founder of “Hope Hands”, Neha has impacted thousands of lives by addressing rural healthcare challenges.</p>
+      </div>
+
+      <!-- Speaker 4 -->
+      <div class="speaker-card">
+        <img src="https://via.placeholder.com/120" alt="Speaker 4">
+        <div class="speaker-name">Amit Desai</div>
+        <div class="speaker-title">Youth Mentor</div>
+        <p class="speaker-bio">Amit inspires young leaders to take charge of their communities and create meaningful change through grassroots projects.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Janata | All Rights Reserved</p>
+    <p>
+      <a href="about.html">About Us</a> |
+      <a href="contact.html">Contact</a>
+    </p>
+  </footer>
+
+</body>
+</html>

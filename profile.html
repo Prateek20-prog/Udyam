@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donor Profile</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .section-title{
+      margin-top: 100px;
+    }
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    .close-btn:hover {
+      color: #ff6600;
+    }
+    .edit-form {
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">
+        <a href="index.html">
+          <img src="hello.png" alt="Janata Logo" >
+        </a>
+      </div>
+    <ul class="nav-links">
+  <li><a href="profile.html" class="gin">Profile</a></li>
+  <li><a href="ssps.html" class="nig">SSPs</a></li>
+  <li><a href="causes.html" class="nig">Causes</a></li>
+  <li><a href="donation.html" class="nig">Donations</a></li>
+  <li><a href="schemes.html" class="nig">Schemes</a></li>
+  <li><a href="community.html" class="nig">Community</a></li>
+  <li><a href="contact.html" class="nig">Contact Us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="profile-page">
+    <h2 class="section-title">Donor Profile</h2>
+    <div class="profile-card">
+      <img id="profilePhoto" src="Screenshot 2025-09-26 073714.png" alt="Profile Photo">
+      <h3 id="profileName">Name: </h3>
+      <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+      <p><strong>Phone:</strong> <span id="profilePhone"></span></p>
+      <p><strong>Date of Birth:</strong> <span id="profileDob"></span></p>
+      <p><strong>Income:</strong> ₹<span id="profileIncome"></span></p>
+      <p><strong>Legal Document:</strong> <span id="profileDocument"></span></p>
+      <p><strong>Donation Amount:</strong> ₹<span id="profileDonation"></span></p>
+
+      <button id="editBtn" class="btn">Edit Profile</button>
+    </div>
+
+    <!-- Hidden Edit Form -->
+    <form id="editForm" class="edit-form" style="display:none;">
+      <button type="button" class="close-btn" onclick="closeForm()">×</button>
+      <h3>Edit Your Details</h3>
+      <label>Full Name:
+        <input type="text" id="editName" required>
+      </label>
+      <label>Email:
+        <input type="email" id="editEmail" required>
+      </label>
+      <label>Phone:
+        <input type="tel" id="editPhone" required>
+      </label>
+      <label>Date of Birth:
+        <input type="date" id="editDob" required>
+      </label>
+      <label>Income:
+        <input type="number" id="editIncome" required>
+      </label>
+      <label>Legal Document:
+        <input type="text" id="editDocument" required>
+      </label>
+      <label>Donation Amount:
+        <input type="number" id="editDonation" required>
+      </label>
+      <label>Change Photo:
+        <input type="file" id="editPhoto" accept="image/*">
+      </label>
+      <button type="submit" class="btn">Save Changes</button>
+    </form>
+  </main>
+
+  <script>
+    function loadProfile() {
+      const donorData = JSON.parse(localStorage.getItem("donorData"));
+      if (donorData) {
+        document.getElementById("profileName").textContent = donorData.name;
+        document.getElementById("profileEmail").textContent = donorData.email;
+        document.getElementById("profilePhone").textContent = donorData.phone;
+        document.getElementById("profileDob").textContent = donorData.dob;
+        document.getElementById("profileIncome").textContent = donorData.income;
+        document.getElementById("profileDocument").textContent = donorData.document;
+        document.getElementById("profileDonation").textContent = donorData.donation;
+
+        if (donorData.photo) {
+          document.getElementById("profilePhoto").src = donorData.photo;
+        }
+      }
+    }
+
+    loadProfile();
+
+    // Show edit form with existing data
+    document.getElementById("editBtn").addEventListener("click", function () {
+      const donorData = JSON.parse(localStorage.getItem("donorData"));
+      if (donorData) {
+        document.getElementById("editName").value = donorData.name;
+        document.getElementById("editEmail").value = donorData.email;
+        document.getElementById("editPhone").value = donorData.phone;
+        document.getElementById("editDob").value = donorData.dob;
+        document.getElementById("editIncome").value = donorData.income;
+        document.getElementById("editDocument").value = donorData.document;
+        document.getElementById("editDonation").value = donorData.donation;
+      }
+      document.getElementById("editForm").style.display = "block";
+    });
+
+    // Save edits
+    document.getElementById("editForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      let donorData = JSON.parse(localStorage.getItem("donorData")) || {};
+
+      donorData.name = document.getElementById("editName").value;
+      donorData.email = document.getElementById("editEmail").value;
+      donorData.phone = document.getElementById("editPhone").value;
+      donorData.dob = document.getElementById("editDob").value;
+      donorData.income = document.getElementById("editIncome").value;
+      donorData.document = document.getElementById("editDocument").value;
+      donorData.donation = document.getElementById("editDonation").value;
+
+      // Handle new photo
+      const photoFile = document.getElementById("editPhoto").files[0];
+      if (photoFile) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          donorData.photo = event.target.result;
+          localStorage.setItem("donorData", JSON.stringify(donorData));
+          loadProfile();
+          document.getElementById("editForm").style.display = "none";
+        };
+        reader.readAsDataURL(photoFile);
+      } else {
+        localStorage.setItem("donorData", JSON.stringify(donorData));
+        loadProfile();
+        document.getElementById("editForm").style.display = "none";
+      }
+    });
+
+    // Close form
+    function closeForm() {
+      document.getElementById("editForm").style.display = "none";
+    }
+</script>
+  </script>
+</body>
+</html>

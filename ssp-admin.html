@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SSP Registrations Admin</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body{font-family:Inter, system-ui, Arial, sans-serif;padding:18px;background:#f5f7fb}
+    .card{background:#fff;padding:16px;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,0.06);max-width:1100px;margin:0 auto}
+    h1{margin:0 0 12px}
+    table{width:100%;border-collapse:collapse;font-size:0.95rem}
+    th,td{padding:8px 10px;border-bottom:1px solid #eee;text-align:left}
+    th{background:#fafafa}
+    .btn{display:inline-block;padding:6px 10px;border-radius:6px;border:1px solid transparent;cursor:pointer}
+    .btn.view{background:#fff;border-color:#ccc}
+    .btn.approve{background:#2d9a3f;color:#fff}
+    .btn.reject{background:#d64545;color:#fff}
+    .btn.delete{background:#f2f2f2;color:#333}
+    .controls{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+    .filter{padding:8px;border:1px solid #ddd;border-radius:6px}
+    .status-badge{padding:4px 8px;border-radius:999px;font-size:0.85rem}
+    .status-pending{background:#fff3cd;color:#856404;border:1px solid #ffe8a1}
+    .status-approved{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+    .status-rejected{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+    .modal{position:fixed;left:0;top:0;right:0;bottom:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.4);z-index:1500}
+    .modal.active{display:flex}
+    .modal-card{background:#fff;padding:16px;border-radius:8px;max-width:900px;width:96%;max-height:80vh;overflow:auto}
+    pre{white-space:pre-wrap;word-wrap:break-word}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>SSP Registrations — Admin</h1>
+    <div class="controls">
+      <label>Filter:
+        <select id="filterType" class="filter">
+          <option value="all">All</option>
+          <option value="hospital">Hospitals</option>
+          <option value="school">Schools</option>
+        </select>
+      </label>
+      <label>Search:
+        <input id="searchInput" placeholder="search by name, reg number, contact" style="padding:8px;border:1px solid #ddd;border-radius:6px;width:340px" />
+      </label>
+      <button id="refreshBtn" class="btn">Refresh</button>
+      <div style="margin-left:auto">Total: <span id="totalCount">0</span></div>
+    </div>
+
+    <div id="listWrap">
+      <table id="regTable">
+        <thead>
+          <tr><th>#</th><th>Type</th><th>Name</th><th>Reg/Affiliation</th><th>Contact</th><th>Submitted</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-card" role="document">
+      <div style="display:flex;gap:8px;align-items:center;justify-content:space-between">
+        <strong id="modalTitle">Registration</strong>
+        <div><button id="closeModal" class="btn">Close</button></div>
+      </div>
+      <hr />
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <script>
+    // Admin UI for ssp_registrations_v1 stored in localStorage
+    (function(){
+      const key = 'ssp_registrations_v1';
+      const tableBody = document.querySelector('#regTable tbody');
+      const totalCount = document.getElementById('totalCount');
+      const filterType = document.getElementById('filterType');
+      const searchInput = document.getElementById('searchInput');
+      const refreshBtn = document.getElementById('refreshBtn');
+      const modal = document.getElementById('modal');
+      const modalBody = document.getElementById('modalBody');
+      const modalTitle = document.getElementById('modalTitle');
+      const closeModal = document.getElementById('closeModal');
+
+      function load(){
+        const raw = localStorage.getItem(key) || '[]';
+        try{
+          return JSON.parse(raw);
+        }catch(e){ return []; }
+      }
+
+      function save(arr){ localStorage.setItem(key, JSON.stringify(arr)); }
+
+      function render(){
+        const rows = load();
+        const f = filterType.value;
+        const q = (searchInput.value||'').toLowerCase().trim();
+        let filtered = rows.filter(r=> (f==='all' || r.type===f));
+        if(q) filtered = filtered.filter(r=> ( (r.orgName||r.schoolName||'').toString().toLowerCase().includes(q) || (r.regNumber||r.affiliationNumber||'').toString().toLowerCase().includes(q) || (r.contactPerson||r.contactName||'').toString().toLowerCase().includes(q) ));
+
+        tableBody.innerHTML='';
+        filtered.forEach((r,i)=>{
+          const tr = document.createElement('tr');
+          const name = r.type==='hospital' ? (r.orgName||'') : (r.schoolName||'');
+          const reg = r.regNumber||r.affiliationNumber||'';
+          const contact = r.email || r.contactPerson || r.contactName || '';
+          const date = new Date(r.submittedAt||r.createdAt||Date.now()).toLocaleString();
+          const status = r.status||'pending';
+
+          tr.innerHTML = `<td>${i+1}</td>
+            <td>${r.type||''}</td>
+            <td>${escapeHtml(name)}</td>
+            <td>${escapeHtml(reg)}</td>
+            <td>${escapeHtml(contact)}</td>
+            <td>${escapeHtml(date)}</td>
+            <td><span class="status-badge ${status==='approved'?'status-approved':status==='rejected'?'status-rejected':'status-pending'}">${status}</span></td>
+            <td>
+              <button class="btn view" data-idx="${i}">View</button>
+              <button class="btn approve" data-idx="${i}">Approve</button>
+              <button class="btn reject" data-idx="${i}">Reject</button>
+              <button class="btn delete" data-idx="${i}">Delete</button>
+            </td>`;
+          tableBody.appendChild(tr);
+        });
+        totalCount.textContent = filtered.length;
+      }
+
+      function escapeHtml(s){ if(!s) return ''; return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c]; }); }
+
+      // event delegation for actions
+      tableBody.addEventListener('click', (ev)=>{
+        const btn = ev.target.closest('button'); if(!btn) return; const idx = Number(btn.dataset.idx);
+        const arr = load(); const rec = arr[idx]; if(!rec) return;
+        if(btn.classList.contains('view')){ openModal(rec); }
+        else if(btn.classList.contains('approve')){ rec.status='approved'; save(arr); render(); }
+        else if(btn.classList.contains('reject')){ rec.status='rejected'; save(arr); render(); }
+        else if(btn.classList.contains('delete')){ if(confirm('Delete this registration?')){ arr.splice(idx,1); save(arr); render(); } }
+      });
+
+      function openModal(rec){ modalTitle.textContent = (rec.type||'Registration'); modalBody.innerHTML = renderDetails(rec); modal.classList.add('active'); modal.setAttribute('aria-hidden','false'); }
+
+      function renderDetails(r){
+        // show a structured detail view
+        let html = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">';
+        for(const k of Object.keys(r)){
+          if(['type','submittedAt','status'].includes(k)) continue; // show later
+          html += `<div><strong>${escapeHtml(k)}</strong><div><pre>${escapeHtml(String(r[k]||''))}</pre></div></div>`;
+        }
+        html += '</div>';
+        html += `<hr><div><strong>Submitted:</strong> ${escapeHtml(new Date(r.submittedAt||'').toLocaleString())}</div>`;
+        html += `<div style="margin-top:8px"><strong>Status:</strong> ${escapeHtml(r.status||'pending')}</div>`;
+        return html;
+      }
+
+      closeModal.addEventListener('click', ()=>{ modal.classList.remove('active'); modal.setAttribute('aria-hidden','true'); });
+      modal.addEventListener('click', (e)=>{ if(e.target===modal) { modal.classList.remove('active'); modal.setAttribute('aria-hidden','true'); } });
+
+      refreshBtn.addEventListener('click', render);
+      filterType.addEventListener('change', render);
+      searchInput.addEventListener('input', ()=>{ setTimeout(render,150); });
+
+      // initial render
+      render();
+    })();
+  </script>
+</body>
+</html>

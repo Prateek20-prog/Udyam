@@ -1,0 +1,1018 @@
+/* Reset */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Poppins', sans-serif; color: #333; line-height: 1.6;}
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+/* Navbar */
+:root{
+  --header-h: 80px; /* compact header height */
+  /* softer purple gradient to match the site's brand and background */
+  --nav-hover-start: #4324BA; /* deep brand purple */
+  --nav-hover-end: #7A4BFF;   /* lighter purple accent */
+}
+header {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  z-index: 1000;
+}
+
+/* Ensure any page-specific fixed sidebar/nav sits above hero content */
+.nav-bar {
+  z-index: 1200; /* higher than header and hero */
+}
+
+/* Keep hero content below fixed UI elements */
+.hero {
+  z-index: 0;
+}
+
+/* Ensure hero background layers don't cover fixed UI (sidebar/header) */
+.hero::before,
+.hero::after {
+  z-index: -1; /* push decorative layers behind the hero box */
+}
+
+/* Make sidebar absolutely top-most when opened */
+.nav-bar {
+  position: fixed !important; /* ensure fixed positioning */
+  z-index: 99999 !important; /* very high so it overlays hero */
+}
+
+nav {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 1rem;
+  height: var(--header-h);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo img {
+  height: 48px; /* smaller logo for compact header */
+  width: auto;
+  margin-right: 10px;
+}
+
+.logo span {
+  font-size: 3rem;
+  font-weight: bold;
+  color: rgb(67, 24, 186); /* adjust based on background */
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+
+}
+#no{
+  height: 80px;
+  width: 120px;
+}
+.nig{
+  border: 2px solid white;
+  border-radius: 10px;
+  padding: 12px;
+  border-style: dotted;
+}
+.nav-links a {
+  font-weight: 600;
+  transition: all 220ms ease;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: #333;
+}
+.nav-links a:hover, .nav-links a.active {
+  color: #fff;
+  background: linear-gradient(45deg, var(--nav-hover-start), var(--nav-hover-end));
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0,153,255,0.12);
+}
+
+/* Hamburger (Mobile) */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
+.gin{
+  border: 2px solid yellow;
+  padding: 12px;
+  border-radius: 10px;
+  color: black;
+  background-color: lightblue;
+}
+.hamburger div {
+  width: 25px; height: 3px;
+  background: #ede9e9;
+  transition: all 0.3s;
+}
+@media(max-width: 768px) {
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 70px; right: 0;
+    background: white;
+    flex-direction: column;
+    width: 220px;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(252, 251, 251, 0.2);
+  }
+  .nav-links.active { display: flex; }
+  .hamburger { display: flex; }
+}
+
+/* Hero */
+.hero {
+  height: 90vh;
+  background: url('hero.jpg') center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  text-align: center;
+  color: white;
+  border-radius: 30px;
+  margin-top: 0; /* ensure hero sits directly under the header */
+  width: 90%;
+  max-width: 1100px; /* reduce width a bit */
+  margin-left: auto;
+  margin-right: auto;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  top:0; left:0; right:0; bottom:0;
+  background: linear-gradient(rgba(0,0,50,0.6), rgba(0, 85, 100, 0.6));
+  border-radius: 30px;
+}
+.hero-content {
+  position: relative;
+  z-index: 1;
+  animation: fadeIn 2s ease-in-out;
+}
+
+/* On wide viewports reserve space for the fixed sidebar so hero doesn't overlap it */
+@media (min-width: 1000px) {
+  .hero {
+    margin-left: 260px; /* width of the sidebar + spacing */
+    width: calc(100% - 260px);
+    max-width: none;
+    border-radius: 20px;
+  }
+  /* If nav-bar is open, it will slide over; ensure it stays above */
+  .nav-bar { z-index: 1200; }
+}
+.hero h1 { font-size: 3rem; margin-bottom: 1rem; font-weight: 700; }
+.hero p { font-size: 1.25rem; margin-bottom: 2rem; }
+.btn {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  background: linear-gradient(90deg, #003399, #007bff);
+  color: white;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+.btn:hover { opacity: 0.85; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Section */
+section {
+  padding: 5rem 1rem;
+  max-width: 1200px;
+  margin: auto;
+}
+.section-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 50px;
+  margin-bottom: 3rem;
+  background: linear-gradient(90deg, #003399, #007bff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Cards */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+.card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+  transform: translateY(40px);
+  opacity: 0;
+  transition: all 0.6s ease-out;
+}
+.card img { width: 100%; height: 200px; object-fit: cover; }
+.card-body { padding: 1.5rem; text-align: center; }
+.card-body h3 { margin-bottom: 0.8rem; font-size: 1.25rem; font-weight: 600; }
+.card-body p { color: #555; font-size: 0.95rem; }
+.card-body a {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.6rem 1.4rem;
+  background: linear-gradient(90deg, #003399, #007bff);
+  color: white;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.card-body a:hover { opacity: 0.85; }
+
+/* Scroll animation trigger */
+.show { opacity: 1; transform: translateY(0); }
+
+/* Contact Page */
+.contact-form {
+  max-width: 600px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.contact-form input,
+.contact-form textarea {
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* Footer */
+.site-footer {
+  background: #0f1720; /* near-black with a touch of blue */
+  color: #d6d6d8;
+  padding: 2rem 1rem;
+}
+.site-footer .footer-inner {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.site-footer a { color: #9aa7ff; text-decoration: none; }
+.site-footer a:hover { color: #fff; }
+.site-footer .footer-left { font-size: 0.95rem; }
+.site-footer .footer-right { font-size: 0.95rem; }
+
+.site-footer .footer-links {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+/* fallback for pages using plain <footer> */
+footer { background: transparent; }
+.logo img {
+  height: 50px;  /* adjust size */
+  width: auto;
+}
+
+/* Donor Page */
+.donor-page {
+  padding: 60px 20px;
+  max-width: 1000px;
+  margin: auto;
+  text-align: center;
+}
+
+/* Full width variant for analytical dashboard pages */
+.donor-page.full-width, .donor-page.full-width .donation-dashboard, .donation-dashboard.full-width {
+  max-width: 1400px;
+  width: calc(100% - 40px);
+  margin: 12px auto;
+}
+
+.analytics-grid { display:grid; grid-template-columns: 1fr 460px; gap:1rem; align-items:start }
+.charts-col { display:flex; flex-direction:column; gap:1rem }
+.chart-card { background:#fff; padding:12px; border-radius:8px; box-shadow:0 6px 20px rgba(10,20,50,0.04) }
+.pie-row { display:flex; gap:1rem }
+
+.top-table.compact { width:100%; border-collapse: collapse; }
+.top-table.compact thead th { text-align:left; padding:10px; background:#fafafa }
+.top-table.compact tbody td { padding:10px; border-bottom:1px solid #eee }
+
+@media (max-width: 1100px){ .analytics-grid{ grid-template-columns: 1fr } .pie-row{ flex-direction:row; flex-wrap:wrap } }
+
+.leaderboard table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.leaderboard th, .leaderboard td {
+  border: 1px solid #ddd;
+  padding: 12px;
+}
+
+.leaderboard th {
+  background: #ff6600;
+  color: #fff;
+}
+
+.donate {
+  margin-top: 40px;
+}
+
+/* Donation Dashboard */
+.donation-dashboard {
+  background: linear-gradient(180deg, #fff, #fbfbff);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(10,20,50,0.06);
+  margin-bottom: 2rem;
+}
+.donation-dashboard h2 { margin-bottom: 1rem; }
+.dashboard-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 1rem; align-items: start; }
+.summary-cards { display: flex; gap: 1rem; flex-wrap: wrap; }
+.card.small { background: #fff; padding: 1rem; border-radius: 8px; min-width: 150px; box-shadow: 0 4px 14px rgba(0,0,0,0.06); }
+.card-title { font-size: 0.9rem; color: #666; }
+.card-value { font-size: 1.4rem; font-weight: 700; margin-top: 6px; }
+
+.top-donations { background: #fff; padding: 0.75rem; border-radius: 8px; box-shadow: 0 4px 14px rgba(0,0,0,0.04); }
+.top-donations h3 { margin-top: 0; }
+.top-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.top-table th, .top-table td { padding: 10px 8px; border-bottom: 1px solid #eee; text-align: left; }
+.top-table th { background: #fafafa; font-weight: 700; }
+.top-table tbody tr:hover { background: #fbfbff; }
+
+@media (max-width: 900px){
+  .dashboard-grid { grid-template-columns: 1fr; }
+}
+
+.donate-buttons button {
+  margin: 10px;
+  padding: 12px 20px;
+  font-size: 16px;
+  border: none;
+  background: #ff6600;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.donate-buttons button:hover {
+  background: #e55b00;
+}
+
+/* Edit Form Modal */
+.edit-form {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  z-index: 2000;
+  width: 90%;
+  max-width: 500px;
+}
+
+.edit-form h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.edit-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.edit-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+.edit-form input, 
+.edit-form select {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.edit-form .btn {
+  flex: 1;
+}
+
+.edit-form .btn.cancel {
+  background: #999;
+}
+
+/* Profile Page */
+.profile-page {
+  padding: 60px 20px;
+  max-width: 1000px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.profile-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.profile-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border: 3px solid #ff6600;
+}
+
+.profile-details p {
+  font-size: 16px;
+  margin: 8px 0;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 6px;
+  text-align: left;
+}
+
+/* Donor Page */
+.donor-page {
+  padding: 80px 20px;
+  max-width: 600px;
+  margin: auto;
+}
+
+.donor-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.donor-form label {
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+}
+
+.donor-form input,
+.donor-form select {
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.donor-form button {
+  margin-top: 15px;
+  background: linear-gradient(90deg, #003399, #007bff);
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.donor-form button:hover {
+  opacity: 0.85;
+}
+/* Profile Page */
+.profile-page {
+  padding: 80px 20px;
+  max-width: 600px;
+  margin: auto;
+}
+
+.profile-card {
+  text-align: center;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.profile-card img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.logo img {
+  height: 100px;
+  width: auto;
+  margin-right: 10px;
+}
+
+
+.logo img {
+  height: 50px;  /* adjust size */
+  width: auto;
+}
+
+/* Dropdown container */
+.dropdown {
+  position: relative;
+}
+
+/* Dropdown menu hidden by default */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%; 
+  left: 0;
+  background-color: #222;
+  padding: 10px 0;
+  min-width: 180px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+/* Dropdown menu items */
+.dropdown-menu li {
+  list-style: none;
+}
+
+.dropdown-menu li a {
+  display: block;
+  padding: 10px 15px;
+  color: white;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.dropdown-menu li a:hover {
+  background: #444;
+}
+
+/* Show dropdown on hover (desktop) */
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* For mobile view - show when parent is clicked */
+@media (max-width: 768px) {
+  .dropdown-menu {
+    position: static;
+    box-shadow: none;
+  }
+}
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #f4f4f4;
+  color: #333;
+}
+
+header {
+  background: #222;
+  color: white;
+  padding: 15px 30px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+}
+
+.nav-links li {
+  margin-left: 20px;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+}
+
+.hero {
+  background: url('hero-bg.jpg') center/cover no-repeat;
+  color: white;
+  text-align: center;
+  padding: 0 20px; /* keep horizontal padding but remove top/bottom so hero aligns to header */
+  width: 90%;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero h1 {
+  font-size: 3rem;
+}
+
+.btn {
+  display: inline-block;
+  margin: 10px;
+  padding: 12px 20px;
+  background: #ff6600;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn:hover {
+  background: #e55d00;
+}
+
+/* Dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #222;
+  border-radius: 8px;
+  margin-top: 10px;
+  min-width: 180px;
+  text-align: left;
+  padding: 10px 0;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  z-index: 1000;
+}
+
+.dropdown-menu li {
+  list-style: none;
+}
+
+.dropdown-menu li a {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: white;
+  transition: background 0.3s;
+}
+
+.dropdown-menu li a:hover {
+  background: #444;
+}
+
+.show {
+  display: block;
+}
+
+/* Submenu that appears to the right of the parent menu item */
+.dropdown-menu .has-submenu {
+  position: relative;
+}
+.dropdown-submenu {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  margin-left: 6px;
+  background: #222;
+  min-width: 220px;
+  border-radius: 8px;
+  padding: 8px 0;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+}
+.dropdown-submenu li a {
+  padding: 8px 14px;
+}
+.dropdown-menu .has-submenu:hover > .dropdown-submenu,
+.dropdown-menu .has-submenu:focus-within > .dropdown-submenu {
+  display: block;
+}
+
+/* When toggled via JS on touch devices */
+.dropdown-menu .has-submenu.submenu-open > .dropdown-submenu {
+  display: block;
+}
+
+/* Focus styles for accessibility */
+.dropdown-menu a:focus,
+.dropdown-submenu a:focus,
+.dropdown-menu a:focus-visible,
+.dropdown-submenu a:focus-visible {
+  outline: none;
+  background: rgba(255,255,255,0.06);
+  box-shadow: 0 0 0 3px rgba(0,123,255,0.18);
+  border-radius: 6px;
+}
+
+/* Visible focus for primary buttons */
+.btn:focus,
+.btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(0,123,255,0.16);
+  transform: translateY(-1px);
+}
+
+/* Ensure focusable anchors inside menus are keyboard reachable */
+.dropdown-menu a,
+.dropdown-submenu a {
+  outline: none;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #222;
+  color: white;
+}
+
+/* Site-wide header normalization
+   Some pages include inline header styles that make the header taller.
+   Force a consistent, compact header across all pages to avoid layout jumps. */
+header{
+  padding: 0 !important;
+  height: var(--header-h) !important;
+  min-height: var(--header-h) !important;
+  display: block;
+  overflow: hidden;
+}
+/* Ensure the nav inside the header uses the expected compact height and centers items */
+header nav{
+  height: var(--header-h) !important;
+  display: flex;
+  align-items: center;
+}
+/* Keep images inside header constrained so they don't stretch it */
+header img{
+  max-height: 48px !important;
+  height: auto !important;
+}
+
+/* ---------------- PREMIUM HOVER FOR NAV LINKS ---------------- */
+.nav-links .nig {
+  position: relative;
+  padding: 12px 18px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  color: #111;
+}
+
+.nav-links .nig::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #007bff, #00c6ff);
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.3s ease;
+}
+
+.nav-links .nig:hover {
+  color: #fff;
+  border-color: transparent;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3);
+}
+
+.nav-links .nig:hover::before {
+  opacity: 1;
+}
+/* Nav Links White Background + Hover Animation */
+.nav-links {
+  background: white;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 20px;
+  gap: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nav-links a {
+  padding: 10px 16px;
+  border-radius: 8px;
+  color: #333;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  background: linear-gradient(90deg, #003399, #007bff);
+  color: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+/* Make Header White */
+header {
+  background: #fff !important;
+  color: #222 !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+header .nav-links a {
+  color: #333 !important;
+}
+
+/* Dark Sections (Profile, Causes, Donor, etc.) */
+.profile-page,
+.donor-page,
+.causes-page {
+  
+  color: #fff;
+  padding: 80px 20px;
+  border-radius: 12px;
+}
+
+.profile-card,
+.donor-form,
+.card {
+  background: #111;
+  color: #fff;
+  border: 1px solid #333;
+  box-shadow: 0 6px 18px rgba(255,255,255,0.05);
+}
+
+.profile-card h2,
+.card-body h3 {
+  color: #ffcc00; /* Accent heading color */
+}
+
+.profile-card p,
+.card-body p {
+  color: #ccc;
+}
+/* White background for Donor, Profile, Top Donor sections */
+.profile-page,
+.donor-page,
+.leaderboard {
+  background: #fff;
+  color: #333;
+  padding: 80px 20px;
+  border-radius: 12px;
+}
+
+.profile-card,
+.donor-form,
+.leaderboard table {
+  background: #fff;
+  color: #333;
+  border: 1px solid #ddd;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+}
+
+.profile-card h2,
+.card-body h3,
+.leaderboard th {
+  color: #007bff; /* Accent color for headings */
+}
+
+.profile-card p,
+.card-body p,
+.leaderboard td {
+  color: #555;
+}
+body {
+ background: linear-gradient(45deg, #d8ccdc, rgb(208, 247, 247), #ebb3b3, #c6ccce);
+  background-size: 400% 400%;
+  animation: gradient 10s ease infinite;
+  height: 100vh;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+.about-container{
+  font-size: 1.15rem;          
+  line-height: 1.8;             
+  color: #222;                 
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  text-align: justify;          
+  margin-bottom: 1.2em;       
+  letter-spacing: 0.3px;       
+  padding: 10px;              
+  font-weight: bold;
+  
+  /* Add a soft shadow for depth */
+  text-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  
+  /* Smooth fade-in effect when loaded */
+  opacity: 0;
+  animation: fadeIn 1.2s ease-in-out forwards;
+}
+
+/* Registration and Login Forms */
+.registration-form, .login-form {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.registration-form input, .login-form input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.registration-form button, .login-form button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+.registration-form button:hover, .login-form button:hover {
+  background-color: #0056b3;
+}
+
+/* Vision Section Styles */
+.vision {
+  padding: 50px 0;
+  text-align: center;
+}
+
+.vision-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.vision h2 {
+  font-size: 2.5rem;
+  color: black;
+  margin-bottom: 20px;
+}
+
+.vision p {
+  font-size: 1.2rem;
+  color: black;
+  line-height: 1.6;
+}

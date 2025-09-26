@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Community Healthcare - Registration</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header style="margin-bottom:8px;">
+        <a href="index.html" class="btn aa">◀ Back to Home</a>
+        <h1 style="margin:8px 0 4px">School Registration</h1>
+        <p style="margin:0;color:#444">Register your school for verification. Provide registration/affiliation details and recognition certificates.</p>
+        <nav class="nav-list">
+          <a href="index.html" class="item">Home</a>
+          <a href="ssps.html" class="item">SSPs</a>
+          <a href="causes.html" class="item">Causes</a>
+          <a href="donation.html" class="item">Donations</a>
+          <a href="schemes.html" class="item">Schemes</a>
+          <a href="community.html" class="item">Community</a>
+          <a href="contact.html" class="item">Contact</a>
+        </nav>
+      </div>
+
+      <div class="op" style="position: absolute; left: 50%; top: 12px; transform: translateX(-50%); z-index:50;">
+        <a href="index.html"><img src="hello.png" alt="Janata Logo" class="header-logo" style="max-height:72px; height:auto;"></a>
+      </div>
+
+      <div class="profile-dropdown" id="profile-dropdown">
+        <button class="profile-dropdown-btn" id="profile-dropdown-btn" aria-haspopup="true" aria-expanded="false">
+          <div class="profile-img"><i class="material-icons-round">person</i></div>
+          <span>Guest User</span>
+          <i class="material-icons-round toggle-icon">expand_more</i>
+        </button>
+        <ul class="profile-dropdown-list" id="profile-dropdown-list" aria-label="Profile menu">
+          <li class="profile-dropdown-list-item"><a href="profile.html"><i class="material-icons-round">account_circle</i> Profile</a></li>
+          <li class="profile-dropdown-list-item"><a href="#"><i class="material-icons-round">edit</i> Edit Profile</a></li>
+          <li class="profile-dropdown-list-item"><a href="#"><i class="material-icons-round">settings</i> Settings</a></li>
+          <hr>
+          <li class="profile-dropdown-list-item"><a href="#"><i class="material-icons-round">logout</i> Log Out</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <main style="max-width:900px;margin:120px auto 60px;">
+    <h1>Register: Community Healthcare Service</h1>
+    <p>Complete the form below. Fields marked with * are mandatory.</p>
+
+    <form action="#" method="post" class="registration-form">
+      <label>Clinic / Organization Name*<input type="text" name="org_name" required></label>
+      <label>Registration Number / License*<input type="text" name="license" required></label>
+      <label>Primary Contact Person*<input type="text" name="contact_name" required></label>
+      <label>Contact Email*<input type="email" name="email" required></label>
+      <label>Contact Phone*<input type="tel" name="phone" pattern="[0-9+\-() ]{7,20}" required></label>
+
+      <label>Services Offered* (e.g., primary care, vaccinations, telemedicine)
+        <input type="text" name="services" required>
+      </label>
+
+      <label>Operating Hours*<input type="text" name="hours" required></label>
+      <label>Number of Medical Staff*<input type="number" name="staff_count" min="0" required></label>
+
+      <label>Emergency Capacity / Ambulance Availability<input type="text" name="emergency_capacity"></label>
+
+      <label>Supporting Documents (licenses, staff qualifications)*<input type="file" name="docs" accept="application/pdf" required></label>
+
+      <label><input type="checkbox" name="agree" required> I confirm that the information is accurate and I consent to verification.*</label>
+
+      <button type="submit" class="btn">Submit Registration</button>
+    </form>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-left">&copy; 2025 Janata</div>
+      <div class="footer-right footer-links">
+        <a href="About.html">About</a>
+        <a href="policy.html">Privacy</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

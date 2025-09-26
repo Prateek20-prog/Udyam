@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donor Page</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">
+        <a href="index.html">
+          <img src="hello.png" alt="Janata Logo">
+        </a>
+      </div>
+      <ul class="nav-links">
+  <li><a href="profile.html" class="nig">Profile</a></li>
+  <li><a href="ssps.html" class="nig">SSPs</a></li>
+  <li><a href="causes.html" class="nig">Causes</a></li>
+  <li><a href="donation.html" class="gin">Donations</a></li>
+  <li><a href="schemes.html" class="nig">Schemes</a></li>
+  <li><a href="community.html" class="nig">Community</a></li>
+  <li><a href="contact.html" class="nig">Contact Us</a></li>
+      </ul>
+      <div class="hamburger"><div></div><div></div><div></div></div>
+    </nav>
+  </header>
+<div class="d-flex flex-column justify-content-center w-100 h-100">
+
+	<div class="d-flex flex-column justify-content-center align-items-center">
+  <main class="donor-page full-width">
+    <!-- Donation Dashboard -->
+    <section class="donation-dashboard">
+      <h2>This Month's Donations (to date)</h2>
+      <div class="dashboard-grid">
+        <div class="summary-cards">
+          <div class="card small">
+            <div class="card-title">Total Amount</div>
+            <div id="totalAmount" class="card-value">₹0</div>
+          </div>
+          <div class="card small">
+            <div class="card-title">Number of Donations</div>
+            <div id="donationCount" class="card-value">0</div>
+          </div>
+          <div class="card small">
+            <div class="card-title">Average Donation</div>
+            <div id="avgDonation" class="card-value">₹0</div>
+          </div>
+        </div>
+
+        <div class="top-donations-analytics full-analytics">
+          <div class="analytics-grid">
+            <div class="charts-col">
+              <div class="chart-card">
+                <div class="small-title">Donation trend (last 30 days)</div>
+                <canvas id="trendCanvas" style="width:100%;height:90px"></canvas>
+              </div>
+              <div class="pie-row">
+                <div class="chart-card">
+                  <div class="small-title">By donation type (amount)</div>
+                  <canvas id="typePieCanvas" style="width:100%;height:220px"></canvas>
+                </div>
+                <div class="chart-card">
+                  <div class="small-title">By SSP Type (amount)</div>
+                  <canvas id="sspPieCanvas" style="width:100%;height:220px"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <div class="table-col">
+              <div class="chart-card">
+                <div class="small-title">Top Donations Table</div>
+                <table id="topDonationsTable" class="top-table compact" aria-label="Top donations table">
+                  <thead>
+                    <tr>
+                      <th>Sno</th>
+                      <th>Name</th>
+                      <th>Type of Donation</th>
+                      <th>SSP Type</th>
+                      <th>SSP Name</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="donate">
+      <h2>Make a Donation</h2>
+      <p>Choose an amount to donate:</p>
+      <div class="donate-buttons">
+        <button onclick="donate(500)">Donate ₹500</button>
+        <button onclick="donate(1000)">Donate ₹1000</button>
+        <button onclick="donate(5000)">Donate ₹5000</button>
+        <button onclick="donate(10000)">Donate ₹10000</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Donation dashboard logic
+    (function(){
+      // Types and sample SSPs
+      const donationTypes = ['food','supplies','clothes','medicare','money'];
+      const sspTypes = ['NGO','Old Age Home','Orphanage'];
+      const sspNames = ['Janata NGO','Sukoon Old Age Home','Little Stars Orphanage','Asha Foundation','Care & Share'];
+
+      // Keep donations in-memory for this session (would be server-backed in production)
+      let donations = [];
+
+      // Seed with some hypothetical donations for the current month
+      function seedData(){
+        const seedCount = 12;
+        for(let i=0;i<seedCount;i++){
+          const amount = Math.round((Math.random()*20000)+200);
+          donations.push({
+            name: Math.random() > 0.2 ? sampleName() : 'Anonymous',
+            type: donationTypes[Math.floor(Math.random()*donationTypes.length)],
+            sspType: sspTypes[Math.floor(Math.random()*sspTypes.length)],
+            sspName: sspNames[Math.floor(Math.random()*sspNames.length)],
+            amount: amount,
+            date: new Date(Date.now() - Math.floor(Math.random()*20)*24*60*60*1000)
+          });
+        }
+      }
+
+      function sampleName(){
+        const first = ['Ravi','Anita','Mohammed','Priya','Sonal','Amit','Neha','Rahul','Sneha','Vikram'];
+        const last = ['Kumar','Sharma','Ali','Singh','Joshi','Patel','Mehta'];
+        return first[Math.floor(Math.random()*first.length)] + ' ' + last[Math.floor(Math.random()*last.length)];
+      }
+
+      // Compute aggregates for "this month"
+      function computeAggregates(){
+        const now = new Date();
+        const start = new Date(now.getFullYear(), now.getMonth(), 1);
+        const monthDonations = donations.filter(d => d.date >= start);
+        const total = monthDonations.reduce((s,d)=>s + d.amount, 0);
+        const count = monthDonations.length;
+        const avg = count ? Math.round(total/count) : 0;
+        return {total, count, avg, monthDonations};
+      }
+
+      // Update dashboard UI
+      function renderDashboard(){
+        const agg = computeAggregates();
+        document.getElementById('totalAmount').textContent = '₹' + numberWithCommas(agg.total);
+        document.getElementById('donationCount').textContent = agg.count;
+        document.getElementById('avgDonation').textContent = '₹' + numberWithCommas(agg.avg);
+        renderAnalytics(agg.monthDonations);
+      }
+
+      // Render analytics: donation trend sparkline, breakdown by type, and compact top donors list
+      function renderAnalytics(monthDonations){
+        renderDonationTrend(monthDonations);
+        renderPies(monthDonations);
+        renderTopDonationsTable(monthDonations);
+      }
+
+      function renderTopDonationsTable(monthDonations){
+        const tbody = document.querySelector('#topDonationsTable tbody');
+        if(!tbody) return;
+        tbody.innerHTML = '';
+        const sorted = monthDonations.slice().sort((a,b)=>b.amount - a.amount).slice(0,20);
+        sorted.forEach((d,i)=>{
+          const tr = document.createElement('tr');
+          const name = (d.name && d.name.toLowerCase().includes('anonymous')) ? 'Anonymous' : d.name;
+          tr.innerHTML = `
+            <td>${i+1}</td>
+            <td>${escapeHtml(name)}</td>
+            <td>${escapeHtml(capitalize(d.type))}</td>
+            <td>${escapeHtml(d.sspType)}</td>
+            <td>${escapeHtml(d.sspName)}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+
+      function renderPies(monthDonations){
+        // compute amounts by donation type and by ssp type
+        const amountsByType = {};
+        const amountsBySSP = {};
+        for(const t of donationTypes){ amountsByType[t]=0; }
+        for(const s of sspTypes){ amountsBySSP[s]=0; }
+        for(const d of monthDonations){ amountsByType[d.type] = (amountsByType[d.type]||0) + d.amount; amountsBySSP[d.sspType] = (amountsBySSP[d.sspType]||0) + d.amount; }
+        drawPie('typePieCanvas', Object.keys(amountsByType).map(k=>({label:capitalize(k), value:amountsByType[k]})));
+        drawPie('sspPieCanvas', Object.keys(amountsBySSP).map(k=>({label:k, value:amountsBySSP[k]})));
+      }
+
+      function drawPie(canvasId, data){
+        const canvas = document.getElementById(canvasId);
+        if(!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const w = canvas.width = canvas.clientWidth || 300;
+        const h = canvas.height = canvas.clientHeight || 220;
+        ctx.clearRect(0,0,w,h);
+        const total = data.reduce((s,d)=>s+d.value,0) || 1;
+        // simple palette
+        const colors = ['#7a4bff','#4a68ff','#00bfa6','#ff8a65','#ffd54f'];
+        let start = -Math.PI/2;
+        data.forEach((d,i)=>{
+          const slice = (d.value/total)*(Math.PI*2);
+          ctx.beginPath();
+          ctx.moveTo(w/2, h/2);
+          ctx.arc(w/2, h/2, Math.min(w,h)/2 - 10, start, start + slice);
+          ctx.closePath();
+          ctx.fillStyle = colors[i % colors.length];
+          ctx.fill();
+          start += slice;
+        });
+        // legend
+        ctx.font = '12px Poppins, Arial'; ctx.fillStyle = '#222';
+        let lx = 10; let ly = h - 16;
+        data.forEach((d,i)=>{
+          ctx.fillStyle = colors[i % colors.length]; ctx.fillRect(lx, ly-10, 12, 12);
+          ctx.fillStyle = '#222'; ctx.fillText(`${d.label} (${Math.round(d.value)})`, lx+18, ly);
+          ly -= 16;
+        });
+      }
+
+      function renderDonationTrend(monthDonations){
+        const canvas = document.getElementById('trendCanvas');
+        if(!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const days = 30;
+        // build daily totals for last `days` days
+        const now = new Date();
+        const daily = new Array(days).fill(0);
+        for(const d of monthDonations){
+          const diff = Math.floor((now - d.date)/(24*60*60*1000));
+          if(diff >=0 && diff < days) daily[days-1-diff] += d.amount;
+        }
+        // draw sparkline
+        const w = canvas.width = canvas.clientWidth || 400;
+        const h = canvas.height = 80;
+        ctx.clearRect(0,0,w,h);
+        const max = Math.max(1, ...daily);
+        ctx.strokeStyle = '#4a68ff'; ctx.lineWidth = 2; ctx.beginPath();
+        daily.forEach((val,i)=>{
+          const x = (i/(days-1))*(w-6)+3;
+          const y = h - (val/max)*(h-10) - 5;
+          if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+        });
+        ctx.stroke();
+        // fill gradient
+        const grad = ctx.createLinearGradient(0,0,0,h);
+        grad.addColorStop(0,'rgba(74,104,255,0.12)'); grad.addColorStop(1,'rgba(74,104,255,0)');
+        ctx.lineTo(w, h); ctx.lineTo(0,h); ctx.closePath();
+        ctx.fillStyle = grad; ctx.fill();
+      }
+
+      function renderByType(monthDonations){
+        const canvas = document.getElementById('typeCanvas');
+        if(!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const counts = {};
+        const amounts = {};
+        for(const t of donationTypes){ counts[t]=0; amounts[t]=0; }
+        for(const d of monthDonations){ counts[d.type] = (counts[d.type]||0)+1; amounts[d.type] = (amounts[d.type]||0)+d.amount; }
+        const keys = Object.keys(counts);
+        const w = canvas.width = canvas.clientWidth || 360;
+        const rowH = 20; const h = canvas.height = rowH * keys.length + 10;
+        ctx.clearRect(0,0,w,h);
+        const maxAmt = Math.max(1, ...keys.map(k=>amounts[k]));
+        keys.forEach((k,i)=>{
+          const x = 100; const y = i*rowH + 6;
+          // label
+          ctx.fillStyle = '#333'; ctx.font = '12px Poppins, Arial'; ctx.fillText(capitalize(k), 6, y+12);
+          // bar
+          const barW = Math.round((amounts[k]/maxAmt) * (w - x - 20));
+          ctx.fillStyle = '#7a4bff'; ctx.fillRect(x, y, barW, 12);
+          // value
+          ctx.fillStyle = '#111'; ctx.fillText('₹' + numberWithCommas(amounts[k]), x + barW + 8, y+12);
+        });
+      }
+
+      // Helpers
+      function numberWithCommas(x){ return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+      function capitalize(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+      function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+      // Public donate function (called by donate buttons)
+      window.donate = function(amount){
+        // For demo: prompt for optional name and SSP choice
+        const name = prompt('Enter your name (leave blank to donate anonymously):');
+        const type = prompt('Type of donation (food/supplies/clothes/medicare/money):','money') || 'money';
+        const sspType = prompt('SSP Type (NGO/Old Age Home/Orphanage):','NGO') || 'NGO';
+        const sspName = prompt('SSP Name:','Janata NGO') || 'Janata NGO';
+
+        const newDonation = {
+          name: name && name.trim() ? name.trim() : 'Anonymous',
+          type: donationTypes.includes(type.toLowerCase()) ? type.toLowerCase() : 'money',
+          sspType: sspTypes.includes(sspType) ? sspType : 'NGO',
+          sspName: sspName,
+          amount: Number(amount),
+          date: new Date()
+        };
+        donations.push(newDonation);
+        renderDashboard();
+        alert('Thank you for donating ₹' + numberWithCommas(newDonation.amount) + '!');
+      };
+
+      // Seed + initial render
+      seedData();
+      renderDashboard();
+
+      // Optional: keep updating (simulate incoming donations) every 12s for demo
+      setInterval(()=>{
+        if(Math.random() < 0.6){
+          donations.push({
+            name: Math.random() > 0.3 ? sampleName() : 'Anonymous',
+            type: donationTypes[Math.floor(Math.random()*donationTypes.length)],
+            sspType: sspTypes[Math.floor(Math.random()*sspTypes.length)],
+            sspName: sspNames[Math.floor(Math.random()*sspNames.length)],
+            amount: Math.round((Math.random()*15000)+100),
+            date: new Date()
+          });
+          renderDashboard();
+        }
+      }, 12000);
+
+    })();
+  </script>
+</body>
+</html>

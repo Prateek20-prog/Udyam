@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Food Assistance - Registration</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<style>
+  .header-logo{
+    margin-top: 50px;
+  }
+</style>
+<body>
+    <header style="margin-bottom:8px;">
+        <a href="index.html" class="btn aa">◀ Back to Home</a>
+        <h1 style="margin:8px 0 4px">School Registration</h1>
+        <p style="margin:0;color:#444">Register your school for verification. Provide registration/affiliation details and recognition certificates.</p>
+    
+      
+        </div>
+        <nav class="nav-list">
+          <a href="index.html" class="item">Home</a>
+          <a href="ssps.html" class="item">SSPs</a>
+          <a href="causes.html" class="item">Causes</a>
+          <a href="donation.html" class="item">Donations</a>
+          <a href="schemes.html" class="item">Schemes</a>
+          <a href="community.html" class="item">Community</a>
+          <a href="contact.html" class="item">Contact</a>
+        </nav>
+      </div>
+
+      <div class="op" style="position: absolute; left: 50%; top: 12px; transform: translateX(-50%); z-index:50;">
+        <a href="index.html"><img src="hello.png" alt="Janata Logo" class="header-logo" style="max-height:72px; height:auto;"></a>
+      </div>
+
+      
+  </header>
+
+  <main style="max-width:900px;margin:120px auto 60px;">
+    <h1>Register: Food Assistance Program</h1>
+    <p>Complete the form below. Fields marked with * are mandatory.</p>
+
+    <form action="#" method="post" class="registration-form">
+      <label>Organization / Program Name*<input type="text" name="org_name" required></label>
+      <label>Registration Number (if applicable)<input type="text" name="reg_number"></label>
+      <label>Primary Contact Person*<input type="text" name="contact_name" required></label>
+      <label>Contact Email*<input type="email" name="email" required></label>
+      <label>Contact Phone*<input type="tel" name="phone" pattern="[0-9+\-() ]{7,20}" required></label>
+
+      <label>Areas Served*<input type="text" name="areas" placeholder="Cities, districts" required></label>
+      <label>Type of Service* (e.g., food distribution, meal centers, vouchers)
+        <input type="text" name="service_type" required>
+      </label>
+
+      <label>Daily/Weekly Capacity*<input type="text" name="capacity" required></label>
+      <label>Storage & Logistics Capacity (cold storage, vehicles)*
+        <input type="text" name="logistics" required>
+      </label>
+
+      <label>Supporting Documents (optional) <input type="file" name="docs" accept="application/pdf"></label>
+
+      <label><input type="checkbox" name="agree" required> I confirm that the information is accurate.*</label>
+
+      <button type="submit" class="btn">Submit Registration</button>
+    </form>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-left">&copy; 2025 Janata</div>
+      <div class="footer-right footer-links">
+        <a href="About.html">About</a>
+        <a href="policy.html">Privacy</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

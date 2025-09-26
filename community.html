@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Community Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: lightpink;
+    }
+
+    /* Keep header spacing consistent with the site's main stylesheet
+       Header is fixed and sized by `style.css`; avoid large page-specific padding */
+    header {
+      background: white;
+      color: purple;
+      text-align: center;
+      padding: 0; /* let global CSS control header height */
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      margin: 0;
+    }
+
+    header p {
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
+
+    section.info {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    section.info h2 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    section.info p {
+      font-size: 1em;
+      color: #555;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    section.links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 50px 20px;
+    }
+
+    .link-card {
+      background: #fff;
+      padding: 40px 20px;
+      width: 250px;
+      text-align: center;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: 0.3s ease;
+      text-decoration: none;
+      color: #333;
+    }
+
+    .link-card:hover {
+      transform: translateY(-5px);
+      background: #e6f2f1;
+    }
+
+    .link-card h3 {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+      color: #007B5E;
+    }
+
+    .link-card p {
+      font-size: 0.95em;
+      color: #555;
+    }
+    .bbx{
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+        justify-content: center;
+    }
+    /* Avoid a large fixed top margin which can cause layout jumps
+       when combined with the site's fixed header. Keep spacing modest. */
+    .info{
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="bbx">
+      <nav>
+      <div class="logo">
+       <a href="index.html"><img src="hello.png" alt="Janata Logo"></a> 
+      </div>
+      <ul class="nav-links">
+        <li><a href="profile.html" class="nig">Profile</a></li>
+  <li><a href="ssps.html" class="nig">SSPs</a></li>
+  <li><a href="causes.html" class="nig">Causes</a></li>
+  <li><a href="donation.html" class="nig">Donations</a></li>
+  <li><a href="schemes.html" class="nig">Schemes</a></li>
+  <li><a href="community.html" class="gin">Community</a></li>
+  <li><a href="contact.html" class="nig">Contact Us</a></li>
+      </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Community Info -->
+  <section class="info">
+    <h2>About Our Community</h2>
+    <p>
+      Our NGO community brings together donors, volunteers, and organizations to make a meaningful impact. 
+      Here, you can explore real-life stories of change, stay updated with the latest news and campaigns, 
+      and engage with others who are passionate about creating a better world.
+    </p>
+  </section>
+
+  <!-- Links to Sections -->
+  <section class="links">
+    <a href="impact.html" class="link-card">
+      <h3>Impact Stories</h3>
+      <p>Read inspiring stories of how your support is changing lives.</p>
+    </a>
+
+    <a href="news.html" class="link-card">
+      <h3>News & Blogs</h3>
+      <p>Stay updated with the latest NGO activities, campaigns, and insights.</p>
+    </a>
+
+    <a href="forum.html" class="link-card">
+      <h3>Community Forum</h3>
+      <p>Share your experiences, ideas, and interact with fellow supporters.</p>
+    </a>
+  </section>
+
+</body>
+</html>

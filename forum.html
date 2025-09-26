@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community Forum</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+    }
+
+    header {
+      background: #6c63ff;
+      color: #fff;
+      padding: 0; /* let global stylesheet control header height */
+      text-align: center;
+    }
+
+    section {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.2em;
+      margin-bottom: 10px;
+    }
+
+    .forum-container {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .post-form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+
+    .post-form input, .post-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+
+    .post-form button {
+      background: #6c63ff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1em;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .post-form button:hover {
+      background: #574fd1;
+    }
+
+    .card-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .card h3 {
+      color: #6c63ff;
+      margin-bottom: 5px;
+    }
+
+    .card span {
+      font-size: 0.8em;
+      color: #999;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: #555;
+      line-height: 1.5;
+    }
+    .vvh{
+        display: flex;
+        flex-direction: row;
+        gap: 50px;
+        justify-content: center;
+    }
+    .btn{
+        border-radius: 20px;
+        height: 30px;
+        width: 100px;
+        background-color: navajowhite;
+        color: violet;
+        font-weight: 900;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="vvh">
+        <img src="hello.png" alt="">
+        <div>
+    <h1>Community Forum</h1>
+    <p>Connect, share, and discuss with our NGO community</p>
+    
+    </div>
+    <a href="index.html"><button class="btn">Home page</button></a>
+    <a href="community.html"><button class="btn">Community</button></a>
+    </div>
+  </header>
+
+  <section>
+    <div class="forum-container">
+      <!-- Post Form -->
+      <div class="post-form">
+        <h3>Post a Message</h3>
+        <input type="text" placeholder="Your Name">
+        <input type="text" placeholder="Subject">
+        <textarea rows="4" placeholder="Write your message here..."></textarea>
+        <button>Post</button>
+      </div>
+
+      <!-- Messages -->
+      <div class="card-container">
+        <div class="card">
+          <h3>Rohit Sharma</h3>
+          <span>Sept 24, 2025</span>
+          <p>I recently volunteered in the education campaign. Amazing experience connecting with the children!</p>
+        </div>
+
+        <div class="card">
+          <h3>Anjali Mehta</h3>
+          <span>Sept 22, 2025</span>
+          <p>Is there any upcoming health camp in the northern villages? I want to participate as a volunteer.</p>
+        </div>
+
+        <div class="card">
+          <h3>Priya Singh</h3>
+          <span>Sept 20, 2025</span>
+          <p>Thanks to the NGO’s donation program, my school received books and stationary kits. Grateful!</p>
+        </div>
+
+        <div class="card">
+          <h3>Vikram Das</h3>
+          <span>Sept 18, 2025</span>
+          <p>Can we start a local fundraiser for our community park renovation? Looking for guidance.</p>
+        </div>
+
+        <div class="card">
+          <h3>Sneha Kapoor</h3>
+          <span>Sept 15, 2025</span>
+          <p>I would like to share my story about the women’s empowerment program. It changed my life!</p>
+        </div>
+
+        <div class="card">
+          <h3>Ajay Kumar</h3>
+          <span>Sept 12, 2025</span>
+          <p>Is there a way to donate directly to health initiatives in rural areas? I want to support ongoing projects.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NGO Signup | Janata</title>
+  <style>
+
+     /* Header */
+    .header {
+      background: #fff; /* Changed to white background */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 20px; /* reduced to match global header */
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .header img {
+      height: 50px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .header img:hover {
+      transform: scale(1.05);
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #007bff, #00c6ff);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .signup-container {
+      background: #fff;
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      max-width: 500px;
+      width: 100%;
+      text-align: left; /* Align form text to the left */
+    }
+
+    .signup-container h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 1.8rem;
+      color: #007bff;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #333;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      outline: none;
+      transition: 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 4px rgba(0,123,255,0.3);
+    }
+
+    .form-group textarea {
+      resize: none;
+      height: 100px;
+    }
+
+    .signup-btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      background: #007bff;
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .signup-btn:hover {
+      background: #0056b3;
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 0.95rem;
+      color: #333;
+    }
+
+    .login-link a {
+      color: #007bff;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header with centered logo -->
+  <header class="header">
+    <a href="index.html">
+      <img src="hello.png" alt="Janata Logo">
+    </a>
+  </header>
+
+  <div class="signup-container">
+    <h2>Register Your NGO</h2>
+    <form action="#" method="post">
+      
+      <div class="form-group">
+        <label for="ngoName">NGO Name</label>
+        <input type="text" id="ngoName" name="ngoName" placeholder="Enter NGO name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="regNumber">Registration Number</label>
+        <input type="text" id="regNumber" name="regNumber" placeholder="Enter registration number" required>
+      </div>
+
+      <div class="form-group">
+        <label for="sector">Sector</label>
+        <select id="sector" name="sector" required>
+          <option value="">Select Sector</option>
+          <option value="education">Education</option>
+          <option value="healthcare">Healthcare</option>
+          <option value="environment">Environment</option>
+          <option value="women">Women Empowerment</option>
+          <option value="others">Others</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="contactPerson">Contact Person</label>
+        <input type="text" id="contactPerson" name="contactPerson" placeholder="Enter contact person name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="Enter email address" required>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" placeholder="Enter phone number" required>
+      </div>
+
+      <div class="form-group">
+        <label for="address">NGO Address</label>
+        <textarea id="address" name="address" placeholder="Enter NGO address" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Create Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter password" required>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Re-enter password" required>
+      </div>
+
+      <a href="profile.html"><button type="submit" class="signup-btn">Register NGO</button></a>
+      
+      <p class="login-link">Already registered? <a href="login.html">Login here</a></p>
+    </form>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register for Funding | Janata</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f4f7fc;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      background: #fff;
+      padding: 8px 20px; /* reduced to match global header sizing */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+      align-items: center;
+    }
+
+    .header img {
+      height: 50px;
+    }
+
+    .signup-container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 40px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .signup-container h2 {
+      text-align: center;
+      color: #007bff;
+      font-size: 1.8rem;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .form-group input, 
+    .form-group textarea, 
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    .form-group input:focus, 
+    .form-group textarea:focus, 
+    .form-group select:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      height: 120px;
+    }
+
+    .signup-btn {
+      width: 100%;
+      padding: 14px;
+      background: #007bff;
+      color: #fff;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .signup-btn:hover {
+      background: #0056b3;
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 1rem;
+    }
+
+    .back-link a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <a href="index.html"><img src="hello.png" alt="Janata Logo"></a>
+  </header>
+
+  <!-- Registration Form -->
+  <div class="signup-container">
+    <h2>Register Your Organization for Funding</h2>
+    <form action="#" method="POST">
+      <div class="form-group">
+        <label for="orgName">Organization Name</label>
+        <input type="text" id="orgName" name="orgName" placeholder="Enter organization name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="orgType">Type of Organization</label>
+        <select id="orgType" name="orgType" required>
+          <option value="">Select Type</option>
+          <option value="ngo">NGO</option>
+          <option value="private">Private Organization</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="fundingAmount">Funding Needed</label>
+        <input type="number" id="fundingAmount" name="fundingAmount" placeholder="Enter funding amount" required>
+      </div>
+
+      <div class="form-group">
+        <label for="projectDescription">Project Description</label>
+        <textarea id="projectDescription" name="projectDescription" placeholder="Describe your project or initiative" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="contactPerson">Contact Person</label>
+        <input type="text" id="contactPerson" name="contactPerson" placeholder="Enter contact person name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+      </div>
+
+      <div class="form-group">
+        <label for="orgAddress">Organization Address</label>
+        <textarea id="orgAddress" name="orgAddress" placeholder="Enter organization address" required></textarea>
+      </div>
+
+      <button type="submit" class="signup-btn">Register for Funding</button>
+      
+      <p class="back-link">Go back to <a href="index.html">Home</a> or <a href="donation.html">Donations</a></p>
+    </form>
+  </div>
+
+</body>
+</html>

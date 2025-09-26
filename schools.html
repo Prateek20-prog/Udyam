@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>School Registration | Janata</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .form-card{max-width:900px;margin:18px auto;padding:20px;background:#fff;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+    form#schoolForm{display:flex;flex-direction:column;gap:12px}
+    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px; margin-top: 60px;}
+    label{display:block;margin-bottom:6px;font-weight:600}
+    input,select,textarea{padding:10px;border:1px solid #ddd;border-radius:6px;width:100%;box-sizing:border-box}
+    .file-preview{font-size:0.9rem;color:#333;margin-top:6px}
+  </style>
+</head>
+<body>
+  <main class="container">
+    <div class="form-card">
+      <header style="margin-bottom:8px;">
+        <a href="index.html" class="btn aa">◀ Back to Home</a>
+        <h1 style="margin:8px 0 4px">School Registration</h1>
+        <p style="margin:0;color:#444">Register your school for verification. Provide registration/affiliation details and recognition certificates.</p>
+      </header>
+
+      <form id="schoolForm" enctype="multipart/form-data" novalidate>
+        <div class="form-grid">
+          <div>
+            <label for="schoolName">School name *</label>
+            <input id="schoolName" name="schoolName" type="text" required />
+
+            <label for="affiliationNumber">Affiliation / registration number *</label>
+            <input id="affiliationNumber" name="affiliationNumber" type="text" required />
+
+            <label for="board">Board (e.g., CBSE, ICSE, State Board)</label>
+            <input id="board" name="board" type="text" />
+
+            <label for="established">Year established</label>
+            <input id="established" name="established" type="number" min="1800" max="2100" />
+          </div>
+
+          <div>
+            <label for="schoolType">School type</label>
+            <select id="schoolType" name="schoolType">
+              <option value="primary">Primary</option>
+              <option value="secondary">Secondary</option>
+              <option value="higher">Higher Secondary</option>
+              <option value="composite">Composite</option>
+            </select>
+
+            <label for="students">Approx. number of students</label>
+            <input id="students" name="students" type="number" min="0" />
+
+            <label for="facilities">Key facilities (comma separated)</label>
+            <input id="facilities" name="facilities" type="text" placeholder="e.g., Library, Labs, Sports" />
+          </div>
+
+          <div>
+            <label for="contactName">Contact person *</label>
+            <input id="contactName" name="contactName" type="text" required />
+
+            <label for="contactPhone">Phone number *</label>
+            <input id="contactPhone" name="contactPhone" type="tel" pattern="[0-9+\-() ]{7,}" required />
+
+            <label for="contactEmail">Official email *</label>
+            <input id="contactEmail" name="contactEmail" type="email" required />
+          </div>
+
+          <div>
+            <label for="schoolAddress">Full postal address *</label>
+            <textarea id="schoolAddress" name="schoolAddress" rows="3" required></textarea>
+
+            <label for="recognition">Recognition type (e.g., RTE, Govt recognition)</label>
+            <input id="recognition" name="recognition" type="text" />
+
+            <label for="affFile">Upload affiliation / registration proof *</label>
+            <input id="affFile" name="affFile" type="file" accept="application/pdf,image/*" required />
+            <div class="file-preview" id="affFilePreview"></div>
+
+            <label for="otherDocs">Upload recognition / certificates (optional)</label>
+            <input id="otherDocs" name="otherDocs" type="file" accept="application/pdf,image/*" />
+            <div class="file-preview" id="otherDocsPreview"></div>
+          </div>
+        </div>
+
+        <label style="margin-top:6px">
+          <input type="checkbox" id="schoolDeclaration" required /> I confirm the information is accurate.
+        </label>
+
+        <div style="margin-top:8px;display:flex;gap:12px;align-items:center">
+          <button type="submit" class="btn aa">Submit registration</button>
+          <div id="schoolMessage" aria-live="polite" style="color:#2b7a0b"></div>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    (function(){
+      const form = document.getElementById('schoolForm');
+      const msg = document.getElementById('schoolMessage');
+
+      function fileName(el){ return el && el.files && el.files[0] ? el.files[0].name : ''; }
+      [['affFile','affFilePreview'],['otherDocs','otherDocsPreview']].forEach(([inp,prev])=>{
+        const i=document.getElementById(inp), p=document.getElementById(prev); if(i && p){ i.addEventListener('change', ()=> p.textContent = fileName(i) || ''); }
+      });
+
+      form.addEventListener('submit', (ev)=>{
+        ev.preventDefault(); if(!form.checkValidity()){ form.reportValidity(); return; }
+        const fd = new FormData(form);
+        const record = {
+          type: 'school',
+          schoolName: fd.get('schoolName'),
+          affiliationNumber: fd.get('affiliationNumber'),
+          board: fd.get('board'),
+          established: fd.get('established'),
+          schoolType: fd.get('schoolType'),
+          students: fd.get('students'),
+          facilities: fd.get('facilities'),
+          contactName: fd.get('contactName'),
+          contactPhone: fd.get('contactPhone'),
+          contactEmail: fd.get('contactEmail'),
+          schoolAddress: fd.get('schoolAddress'),
+          recognition: fd.get('recognition'),
+          affFileName: fileName(document.getElementById('affFile')),
+          otherDocsName: fileName(document.getElementById('otherDocs')),
+          submittedAt: new Date().toISOString(),
+        };
+        const key='ssp_registrations_v1'; const existing = JSON.parse(localStorage.getItem(key)||'[]'); existing.push(record); localStorage.setItem(key, JSON.stringify(existing));
+        msg.textContent = 'Registration saved locally. (Demo storage)'; form.reset(); ['affFilePreview','otherDocsPreview'].forEach(id=>{ const el=document.getElementById(id); if(el) el.textContent=''; });
+      });
+    })();
+  </script>
+</body>
+</html>
